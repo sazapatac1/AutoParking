@@ -1,7 +1,7 @@
 {
   "name": "api",
   "version": "1.0.0",
-  "description": "api carpooling EAFIT",
+  "description": "api autoParking",
   "main": "index.js",
   "scripts": {
     "start": "nodemon index.js",
