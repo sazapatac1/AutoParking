@@ -1,6 +1,6 @@
 'use strict'
 
-//importando mongoose
+//importando mongoose, super importante
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 //libreria encriptación
