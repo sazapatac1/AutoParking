@@ -8,13 +8,13 @@ const bcrypt = require('bcrypt-nodejs')
 
 
 //definiendo schema de usuario
-const AdminShema = new Schema({
+const UserSchema = new Schema({
     displayName: { type: String },
     password:    { type: String, select: false },
     email:       { type: String, unique: true, lowercase:true }
 })
 
-AdminShema.pre('save', function (next) {
+UserSchema.pre('save', function (next) {
     let user = this
     bcrypt.genSalt(10, (err, salt) => {
       if (err) return next(err)
@@ -28,4 +28,4 @@ AdminShema.pre('save', function (next) {
   })
 
 
-module.exports = mongoose.model('User',AdminShema)
+module.exports = mongoose.model('User',UserSchema)
