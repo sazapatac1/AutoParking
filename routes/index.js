@@ -22,7 +22,7 @@ api.post('/registerDriver',driverController.createDriver)
 //mostrar conductores
 api.get('/showDrivers',driverController.showDrivers)
 
-//verificar usuario
+//verificar carnet
 api.get('/verify/:id_carnetFind', driverController.verifyDriver)
 
 api.get('/private', auth, function(req,res){
