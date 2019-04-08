@@ -2,6 +2,7 @@
 
 const express = require('express')
 const userController = require('../controllers/user')
+const driverController = require('../controllers/driver')
 const api = express.Router()
 const auth = require('../middlewares/auth')
 
@@ -14,6 +15,15 @@ api.delete('/delete/:userId', userController.deleteUser)
 
 //mostrar usuarios
 api.get('/usuarios',userController.showUser)
+
+//Registar conductor
+api.post('/registerDriver',driverController.createDriver)
+
+//mostrar conductores
+api.get('/showDrivers',driverController.showDrivers)
+
+//verificar usuario
+api.get('/verify/:id_carnetFind', driverController.verifyDriver)
 
 api.get('/private', auth, function(req,res){
     res.status(200).send({message: 'Tienes acceso'})

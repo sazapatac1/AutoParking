@@ -10,7 +10,7 @@ const CarSchema = new Schema({
     model: {type: Number, default: 0},
     color: {type: String},
     gas:   {type: String, enum: ['Diesel','Extra','Corriente'] },
-    id_driverF: {type: Number}
+    id_driverF: {type: String}
 })
 
 module.exports = mongoose.model('Car',CarSchema)
