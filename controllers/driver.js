@@ -73,12 +73,12 @@ function verifyDriver(req,res){
     let id_carnetFind = req.body.id_carnetFind
     Driver.findOne({'id_carnet': id_carnetFind}, 'name1 last_name1 status', function(err, driver){
         if(err) return res.status(500).send({message: `Error al encontrar el usuario: ${err}`})
-        if(!driver){ return res.status(200).send({message:`El usuario no tiene acceso`})}
+        if(!driver){ return res.status(200).send({access: false})}
         if(driver.status){
-            return res.status(200).send({message:`El usuario ${driver.name1} ${driver.last_name1} tiene acceso`})
+            return res.status(200).send({access: true})
         }
         else{
-            return res.status(200).send({message:`El usuario ${driver.name1} ${driver.last_name1} no tiene acceso`})
+            return res.status(200).send({access: false})
         }
 
     })
