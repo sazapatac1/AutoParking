@@ -23,7 +23,7 @@ api.post('/registerDriver',driverController.createDriver)
 api.get('/showDrivers',driverController.showDrivers)
 
 //verificar carnet
-api.get('/verify/:id_carnetFind', driverController.verifyDriver)
+api.post('/verifyCarnet/', driverController.verifyDriver)
 
 api.get('/private', auth, function(req,res){
     res.status(200).send({message: 'Tienes acceso'})
