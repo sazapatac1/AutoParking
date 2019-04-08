@@ -77,6 +77,9 @@ function verifyDriver(req,res){
         if(driver.status){
             return res.status(200).send({message:`El usuario ${driver.name1} ${driver.last_name1} tiene acceso`})
         }
+        else{
+            return res.status(200).send({message:`El usuario ${driver.name1} ${driver.last_name1} no tiene acceso`})
+        }
 
     })
 }
