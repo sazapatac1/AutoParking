@@ -11,7 +11,7 @@ const AddressSchema = new Schema({
     add2: {type: Number},
     add3: {type: Number},
     add4: {type: Number},
-    latitude: {type: Number},
+    latitude:  {type: Number},
     longitude: {type: Number}
 })
 

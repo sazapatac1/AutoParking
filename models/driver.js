@@ -12,13 +12,12 @@ const DriverSchema = new Schema({
     last_name2: {type: String},
     date: {type: Date},
     email: {type: String},
-    gender: {type: String, enum: ['M','F'] },
+    gender: {type: String, enum: ['Masculino','Femenino'] },
     status: {type: Boolean},
     into: {type: Boolean},
     id_carnet: {type: Number},
     id_internalCarnet: {type: String},
     id_addressF: {type: String}
-
 })
 
 module.exports = mongoose.model('Driver',DriverSchema)
