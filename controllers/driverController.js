@@ -9,7 +9,10 @@ const moment = require('moment')
 
 function createDriver(req, res) {
 
-    addressJson = {
+    console.log("Me esta llegando");
+    console.log(req);
+
+    var addressJson = {
         city: req.body.city,
         add1: req.body.add1,
         add2: req.body.add2,
@@ -18,6 +21,8 @@ function createDriver(req, res) {
         latitude: req.body.latitude,
         longitude: req.body.longitude
     }
+
+
 
     var id_addressF = AddressController.createAddress(addressJson);
 
@@ -49,7 +54,7 @@ function createDriver(req, res) {
         id_driver = driver._id
     })
 
-    carJson = {
+    var carJson = {
         car_plate: req.body.car_plate,
         model: req.body.model,
         color: req.body.color,
