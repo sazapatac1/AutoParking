@@ -27,7 +27,7 @@ function createDriver(req,res){
         last_name1: req.body.last_name1,
         last_name2: req.body.last_name2,
         //registrar date cuando se cree usurio
-        //date: moment.unix(),
+        date: req.body.fecha_nac,
         email: req.body.email,
         gender: req.body.gender,
         //pendiente cambiar para segundo sprint
@@ -101,6 +101,11 @@ function deleteDriver(req,res){
 module.exports = {
     createDriver,
     showDrivers,
+<<<<<<< HEAD
     verifyDriver,
     deleteDriver
 }
+=======
+    verifyDriver
+}
+>>>>>>> f39bd3290a0d8b46ef02a1019d4298e3c48cca34
