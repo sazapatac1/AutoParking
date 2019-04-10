@@ -101,11 +101,6 @@ function deleteDriver(req,res){
 module.exports = {
     createDriver,
     showDrivers,
-<<<<<<< HEAD
     verifyDriver,
     deleteDriver
 }
-=======
-    verifyDriver
-}
->>>>>>> f39bd3290a0d8b46ef02a1019d4298e3c48cca34
