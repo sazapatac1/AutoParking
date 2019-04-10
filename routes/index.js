@@ -3,6 +3,7 @@
 const express = require('express')
 const userController = require('../controllers/user')
 const driverController = require('../controllers/driver')
+const viewsController = require('../controllers/views')
 const api = express.Router()
 const auth = require('../middlewares/auth')
 
@@ -31,5 +32,9 @@ api.get('/private', auth, function(req,res){
 
 //Borrar conductor
 api.post('/deleteDriver',driverController.deleteDriver)
+
+
+//vistas
+
 
 module.exports = api
