@@ -82,7 +82,7 @@ function showDrivers(req, res) {
 }
 
 function verifyDriver(req, res) {
-    let id_carnetFind = req.body.id_carnetFind
+    var id_carnetFind = req.body.id_carnetFind
 
     Driver.findOne({ 'id_internalCarnet': id_carnetFind }, 'name1 last_name1 status', function (err, driver) {
         if (err) return res.status(500).send({ message: `Error al encontrar el usuario: ${err}` })

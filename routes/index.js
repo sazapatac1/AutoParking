@@ -15,7 +15,7 @@ api.get('/usuarios', userController.showUser)
 //Driver
 api.post('/registerDriver',driverController.createDriver)
 api.get('/showDrivers',driverController.showDrivers)
-api.get('/verifyCarnet/:idCarne', driverController.verifyDriver)
+api.post('/verifyCarnet', driverController.verifyDriver)
 
 
 //Addres
