@@ -29,4 +29,7 @@ api.get('/private', auth, function(req,res){
     res.status(200).send({message: 'Tienes acceso'})
 })
 
+//Borrar conductor
+api.post('/deleteDriver',driverController.deleteDriver)
+
 module.exports = api

@@ -84,8 +84,23 @@ function verifyDriver(req,res){
     })
 }
 
+function deleteDriver(req,res){
+    let driverID = req.body.id_driver
+    Driver.findById(driverID,(err,driver)=>{
+        if(err) res.status(500).send({message: `Error al borrar conductor: ${err}`})
+
+        driver.remove(err =>{
+            if(err) res.status(500).send({message: `Error al borrar el usuario: ${err}`})
+            res.status(200).send({message: 'El conductor ha sido eliminado'})
+        })
+
+
+    })
+}
+
 module.exports = {
     createDriver,
     showDrivers,
-    verifyDriver
+    verifyDriver,
+    deleteDriver
 }
