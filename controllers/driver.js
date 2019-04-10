@@ -27,7 +27,7 @@ function createDriver(req,res){
         last_name1: req.body.last_name1,
         last_name2: req.body.last_name2,
         //registrar date cuando se cree usurio
-        //date: moment.unix(),
+        date: req.body.fecha_nac,
         email: req.body.email,
         gender: req.body.gender,
         //pendiente cambiar para segundo sprint
