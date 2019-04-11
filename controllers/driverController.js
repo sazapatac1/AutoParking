@@ -9,9 +9,6 @@ const moment = require('moment')
 
 function createDriver(req, res) {
 
-    console.log("Me esta llegando");
-    console.log(req);
-
     var addressJson = {
         city: req.body.city,
         add1: req.body.add1,
@@ -82,7 +79,7 @@ function showDrivers(req, res) {
 }
 
 function verifyDriver(req, res) {
-    var id_carnetFind = req.body.id_carnetFind
+    let id_carnetFind = req.body.id_carnetFind
 
     Driver.findOne({ 'id_internalCarnet': id_carnetFind }, 'name1 last_name1 status', function (err, driver) {
         if (err) return res.status(500).send({ message: `Error al encontrar el usuario: ${err}` })
