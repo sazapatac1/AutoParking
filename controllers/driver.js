@@ -6,9 +6,11 @@ const Car = require('../models/car')
 const service = require('../services')
 // libreria moment(manejar tiempo)
 const moment = require('moment')
+const AddressController = require('./address')
+const CarController = require('./car')
 
 function createDriver(req,res){
-    const address = new Address({
+    var addressJson = {
         city: req.body.city,
         add1: req.body.add1,
         add2: req.body.add2,
@@ -16,18 +18,22 @@ function createDriver(req,res){
         add4: req.body.add4,
         latitude: req.body.latitude,
         longitude: req.body.longitude
-    }) 
-    address.save((err)=>{
-        if (err) return res.status(500).send({ message: `Error al almacenar direccion: ${err}` })
-    })
+    }
+
+
+
+    var id_addressF = AddressController.createAddress(addressJson);
+
+    if (id_addressF) {
+        return res.status(500).send({ message: `Error al almacenar conductor: Falla almacenando informacion de direccion` })
+    }
 
     const driver = new Driver({
         name1: req.body.name1,
         name2: req.body.name2,
         last_name1: req.body.last_name1,
         last_name2: req.body.last_name2,
-        //registrar date cuando se cree usurio
-        date: req.body.fecha_nac,
+        date: req.body.date,
         email: req.body.email,
         gender: req.body.gender,
         //pendiente cambiar para segundo sprint
@@ -36,27 +42,30 @@ function createDriver(req,res){
         id_carnet: req.body.id_carnet,
         id_internalCarnet: req.body.id_internalCarnet,
         //pendiente para cuando se este creando poner el id foraneo de address
-        id_addressF: address.id
+        id_addressF: id_addressF
     })
 
-    driver.save((err)=>{
-        if (err) return res.status(500).send({ message: `Error al almacenar conductor: ${err}` })
+    var id_driver;
+
+    driver.save((err, driver) => {
+        if (err) return res.status(500).send({ message: `Error al almacenar conductor: Falla almacenando datos del conductor` })
+        id_driver = driver._id
     })
 
-    const car = new Car({
+    var carJson = {
         car_plate: req.body.car_plate,
         model: req.body.model,
         color: req.body.color,
         gas: req.body.gas,
-        id_driverF: driver.id
-    })
-    
-    car.save((err)=>{
-        if (err) return res.status(500).send({ message: `Error al almacenar carro: ${err}` })
+        id_driverF: id_driver
+    }
 
-        return  res.status(200).send({message:`El usuario ${driver.name1} ${driver.last_name1} fue registrado`}) 
-        
-    })
+    if (CarController.createCar(carJson)) {
+        return res.status(500).send({ message: `Error al almacenar conductor: Falla almacenando informacion del vehículo` })
+    }
+
+    return res.status(200).send({ message: 'Conductor almacenado' })
+
 }
 
 function showDrivers(req,res){
