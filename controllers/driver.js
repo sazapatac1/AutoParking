@@ -10,7 +10,6 @@ const AddressController = require('./address')
 const CarController = require('./car')
 
 function createDriverWeb(req,res){
-
     var addressJson = {
         city: req.body.city,
         add1: req.body.add1,
@@ -102,20 +101,25 @@ function deleteDriver(req,res){
 }
 
 function createDriverExcel(req,res){
-    let emailFind = req.body.email
-    var driverJSON =   {
-    name1: req.body.name1,
-    name2: req.body.name2,
-    last_name1: req.body.last_name1,
-    last_name2: req.body.last_name2,
-    email: req.body.email,
-    status: true,
-    into: false
+
+    for(var i = 0; i<req.body.driverList.length;i++){
+        let emailFind = req.body.driverList[i].email
+        var driverJSON =   {
+        name1: req.body.driverList[i].name1,
+        name2: req.body.driverList[i].name2,
+        last_name1: req.body.driverList[i].last_name1,
+        last_name2: req.body.driverList[i].last_name2,
+        email: req.body.driverList[i].email,
+        status: true,
+        into: false
+        }
+        Driver.updateOne({'email': emailFind},driverJSON,{upsert: true}, function(err){
+            if(err) return res.status(500).send({message: `Error al registrar usuario: ${err}`})
+            console.log('conductor creado/actualizado')
+        })
     }
-    Driver.updateOne({'email': emailFind},driverJSON,{upsert: true}, function(err){
-        if(err) return res.status(500).send({message: `Error al registrar usuario: ${err}`})
-        return res.status(200).send({message: 'Conductor creado/actualizado'})
-    })
+    return res.status(200).send({message: 'Conductores creados/actualizados'})
+    
 }
 
 module.exports = {
