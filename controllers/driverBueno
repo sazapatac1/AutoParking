@@ -21,12 +21,7 @@ function createDriverWeb(req,res){
         longitude: req.body.longitude
     }
 
-    var id_addressF = AddressController.createAddress(addressJson);
-    if (id_addressF) {
-        return res.status(500).send({ message: `Error al almacenar conductor: Falla almacenando informacion de direccion` })
-    }
-
-    var driver = {
+    const driver = new Driver({
         name1: req.body.name1,
         name2: req.body.name2,
         last_name1: req.body.last_name1,
@@ -34,31 +29,60 @@ function createDriverWeb(req,res){
         date: req.body.date,
         email: req.body.email,
         gender: req.body.gender,
-        //falta status porque solo lo cambia el excel
+        //pendiente cambiar para segundo sprint
+        status: false,
         into: false,
         id_carnet: req.body.id_carnet,
         id_internalCarnet: req.body.id_internalCarnet,
         //pendiente para cuando se este creando poner el id foraneo de address
         id_addressF: id_addressF
+    })
+
+    var id_addressF = AddressController.createAddress(addressJson);
+
+    if (id_addressF) {
+      return res.status(500).send({ message: `Error al almacenar conductor: Falla almacenando informacion de direccion` })
     }
 
-    //Buscar para actualizar y crear
     let emailFind = req.body.email
-    Driver.updateOne({'email': emailFind},driver,function(err, driverFound){
+    Driver.findOne({'email': emailFind}, 'name1', function(err, driverFound){
         if(err) return res.status(500).send({message: `Error al registrar usuario: ${err}`})
-        var carJson = {
-            car_plate: req.body.car_plate,
-            model: req.body.model,
-            color: req.body.color,
-            gas: req.body.gas,
-            id_driverF: driverFound._id
-        }
+        //Si no existe aun ese conductor
+        if(!driverFound){ 
+            
+            var id_driver;
 
-        if (CarController.createCar(carJson)) {
-            return res.status(500).send({ message: `Error al almacenar conductor: Falla almacenando informacion del vehículo` })
-        }
+            driver.save((err, driver) => {
+                if (err) return res.status(500).send({ message: `Error al almacenar conductor: Falla almacenando datos del conductor` })
+                id_driver = driver._id
+            })
 
-        return res.status(200).send({ message: `Conductor almacenado/actualizado ${driverFound._id} ${id_addressF}` })
+            var carJson = {
+                car_plate: req.body.car_plate,
+                model: req.body.model,
+                color: req.body.color,
+                gas: req.body.gas,
+                id_driverF: id_driver
+            }
+
+            if (CarController.createCar(carJson)) {
+                return res.status(500).send({ message: `Error al almacenar conductor: Falla almacenando informacion del vehículo` })
+            }
+
+            return res.status(200).send({ message: 'Conductor almacenado' })
+        }
+        
+        //Si ya hay un conductor con ese correo se actualiza
+        if(driverFound){
+            Driver.update({_id:driverFound._id},
+                {
+                    driver
+                },
+                function(err,sol){
+                if(err) res.status(500).send({message: 'error'})
+                res.status(200).send({message: `usuario actualizado`})
+            })   
+        }
     })
 }
 
@@ -67,7 +91,7 @@ function showDrivers(req,res){
     Driver.find({},(err,drivers) =>{
         if(err) return res.status(500).send({message : `Error al realizar la petición: ${err}` })
         if(!drivers) return res.status(404).send({message: `No existen conductores`})
-        res.status(200).send({drivers})
+        res.send(200, {drivers})
     })
 }
 
@@ -103,18 +127,29 @@ function deleteDriver(req,res){
 
 function createDriverExcel(req,res){
     let emailFind = req.body.email
-    var driverJSON =   {
-    name1: req.body.name1,
-    name2: req.body.name2,
-    last_name1: req.body.last_name1,
-    last_name2: req.body.last_name2,
-    email: req.body.email,
-    status: true,
-    into: false
-    }
-    Driver.updateOne({'email': emailFind},driverJSON,{upsert: true}, function(err){
+    Driver.findOne({'email': emailFind}, 'name1 status _id', function(err, driverFound){
         if(err) return res.status(500).send({message: `Error al registrar usuario: ${err}`})
-        return res.status(200).send({message: 'Conductor creado/actualizado'})
+        if(!driverFound){ 
+            const driver = new Driver({
+                name1: req.body.name1,
+                name2: req.body.name2,
+                last_name1: req.body.last_name1,
+                last_name2: req.body.last_name2,
+                email: req.body.email,
+                status: true,
+                into: false,
+            })
+            driver.save((err, driver) => {
+                if (err) return res.status(500).send({ message: `Error al almacenar conductor: Falla almacenando datos del conductor` })
+                return res.status(200).send({message: 'Conductor creado'})
+            })
+        }
+        if(driverFound){
+            Driver.update({_id:driverFound._id},{status:true, name1:'Holis'},function(err,sol){
+                if(err) res.status(500).send({message: 'error'})
+                res.status(200).send({message: `usuario actualizado`})
+            })   
+        }
     })
 }
 
