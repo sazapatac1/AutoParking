@@ -44,7 +44,7 @@ function createDriverWeb(req,res){
 
     //Buscar para actualizar y crear
     let emailFind = req.body.email
-    Driver.updateOne({'email': emailFind},driver,function(err, driverFound){
+    Driver.updateOne({'email': emailFind},driver,{upsert: true},function(err, driverFound){
         if(err) return res.status(500).send({message: `Error al registrar usuario: ${err}`})
         var carJson = {
             car_plate: req.body.car_plate,
