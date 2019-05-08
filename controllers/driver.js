@@ -8,6 +8,7 @@ const service = require('../services')
 const moment = require('moment')
 const AddressController = require('./address')
 const CarController = require('./car')
+const ParkingLotController = require('./parkingLot')
 
 function createDriverWeb(req,res){
     var addressJson = {
@@ -73,10 +74,26 @@ function showDrivers(req,res){
 
 function verifyDriver(req,res){
     let id_carnetFind = req.body.id_carnetFind
-    Driver.findOne({'id_internalCarnet': id_carnetFind}, 'name1 last_name1 status', function(err, driver){
+    Driver.findOne({'id_internalCarnet': id_carnetFind}, '_id status into', function(err, driver){
         if(err) return res.status(500).send({message: `Error al encontrar el usuario: ${err}`})
         if(!driver){ return res.status(200).send({access: false})}
         if(driver.status){
+            if(driver.into){
+                ParkingLotController.increaseCells("EAFIT")
+                Driver.updateOne({'_id':driver._id},{into: false},function(err){
+                    if(err) return res.status(500).send({message: `Error al registrar usuario: ${err}`})
+                    console.log('into: false')
+                })
+            }
+            
+            if(!driver.into){
+                ParkingLotController.decreaseCells("EAFIT")
+                Driver.updateOne({'_id':driver._id},{into: true},function(err){
+                    if(err) return res.status(500).send({message: `Error al registrar usuario: ${err}`})
+                    console.log('into: true')
+                })
+            }
+
             return res.status(200).send({access: true})
         }
         else{

@@ -33,35 +33,35 @@ function showAParkingLot(req,res){
     })
 }
 
-function increaseCells(req,res){
-    let nameFind = req.body.name
+function increaseCells(name){
+    let nameFind = name
     ParkingLot.findOne({'name': nameFind}, 'availableCells', function(err,parkingLot){
-        if(err) return res.status(500).send({message: `Error al encontrar lote de parqueo: ${err}`})
-        if(!parkingLot) return res.status(200).send({message: 'No existe lote de parqueo'})
+        if(err) return console.log(`Error al encontrar lote de parqueo: ${err}`)
+        if(!parkingLot) return console.log('No existe lote de parkeo')
         if(parkingLot){
             var updateJSON = {
                 availableCells: parkingLot.availableCells + 1
             }
             ParkingLot.updateOne({'name':nameFind},updateJSON,function(err){
-                if(err) return res.status(500).send({message: `Error al incrementar número de celdas: ${err}`})
-                return res.status(200).send({message: `celdas actualizadas, número de celdas disponibles: ${parkingLot.availableCells+1}`})
+                if(err) return console.log(`Error al incrementar número de celdas: ${err}`)
+                return console.log(`celdas actualizadas, número de celdas disponibles: ${parkingLot.availableCells+1}`)
             })
         }
     })
 }
 
-function decreaseCells(req,res){
-    let nameFind = req.body.name
+function decreaseCells(name){
+    let nameFind = name
     ParkingLot.findOne({'name': nameFind}, 'availableCells', function(err,parkingLot){
-        if(err) return res.status(500).send({message: `Error al encontrar lote de parqueo: ${err}`})
-        if(!parkingLot) return res.status(200).send({message: 'No existe lote de parqueo'})
+        if(err) return console.log(`Error al encontrar lote de parqueo: ${err}`)
+        if(!parkingLot) return console.log('No existe lote de parqueo')
         if(parkingLot){
             var updateJSON = {
                 availableCells: parkingLot.availableCells - 1
             }
             ParkingLot.updateOne({'name':nameFind},updateJSON,function(err){
-                if(err) return res.status(500).send({message: `Error al decrementar número de celdas: ${err}`})
-                return res.status(200).send({message: `celdas actualizadas, número de celdas disponibles: ${parkingLot.availableCells-1}`})
+                if(err) return console.log(`Error al decrementar número de celdas: ${err}`)
+                return console.log(`celdas actualizadas, número de celdas disponibles: ${parkingLot.availableCells-1}`)
             })
         }
     })
