@@ -121,14 +121,11 @@ function createDriverExcel(req,res){
 
     for(var i = 0; i<req.body.driverList.length;i++){
         let emailFind = req.body.driverList[i].email
-        var driverJSON =   {
-        name1: req.body.driverList[i].name1,
-        name2: req.body.driverList[i].name2,
-        last_name1: req.body.driverList[i].last_name1,
-        last_name2: req.body.driverList[i].last_name2,
+        var driverJSON ={
         email: req.body.driverList[i].email,
         status: true,
-        into: false
+        into: false,
+        id_Carnet: req.body.driverList[i].id_Carnet
         }
         Driver.updateOne({'email': emailFind},driverJSON,{upsert: true}, function(err){
             if(err) return res.status(500).send({message: `Error al registrar usuario: ${err}`})
