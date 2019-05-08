@@ -117,15 +117,14 @@ function deleteDriver(req,res){
     })
 }
 
-function createDriverExcel(req,res){
-
+function createDriverExcel(req,res){ 
     for(var i = 0; i<req.body.driverList.length;i++){
         let emailFind = req.body.driverList[i].email
         var driverJSON ={
-        email: req.body.driverList[i].email,
+        email: emailFind,
         status: true,
         into: false,
-        id_Carnet: req.body.driverList[i].id_Carnet
+        id_carnet: req.body.driverList[i].id_Carnet
         }
         Driver.updateOne({'email': emailFind},driverJSON,{upsert: true}, function(err){
             if(err) return res.status(500).send({message: `Error al registrar usuario: ${err}`})
