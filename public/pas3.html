@@ -11,15 +11,12 @@
 
   <title>AutoParking - Archivos</title>
 
-  <!-- Custom fonts for this template -->
+  <!-- Custom fonts for this template-->
   <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
   <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
 
-  <!-- Custom styles for this template -->
+  <!-- Custom styles for this template-->
   <link href="css/sb-admin-2.min.css" rel="stylesheet">
-
-  <!-- Custom styles for this page -->
-  <link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
 
 </head>
 
@@ -67,7 +64,7 @@
 
 
       <!-- Nav Item - Tables -->
-      <li class="nav-item active">
+      <li class="nav-item">
         <a class="nav-link" href="tables.html">
           <i class="far fa-file-pdf"></i>
           <span>Archivos</span></a>
@@ -113,6 +110,11 @@
                 <i class="fas fa-search fa-fw"></i>
               </a>
               
+            </li>
+
+
+
+            <div class="topbar-divider d-none d-sm-block"></div>
 
             <!-- Nav Item - User Information -->
             <li class="nav-item dropdown no-arrow">
@@ -148,21 +150,56 @@
         <div class="container-fluid">
 
           <!-- Page Heading -->
-          <h1 align="center" class="h3 mb-2 text-gray-800">BENEFICIARIOS</h1>
-          <div align="center">
-     <button type="button" name="load_data" id="load_data" class="btn btn-info">Subir</button>
-    </div>
-<br />
-    <br />
-<div align="center">
-     <button type="button" name="env" id="env" class="btn btn-info">Enviar</button>
-    </div>
-<br />
-    <div id="data_table">
-    </div>
+          <div class="d-sm-flex align-items-center justify-content-between mb-4">
+            <h1 class="h4 mb-3 text-gray-900">	&nbsp;&nbsp;&nbsp; Actualizar Conductor</h1>
+          </div>
+	  <div class="container">
 
-          <!-- DataTales Example -->
-          
+	    <div class="card o-hidden border-0 shadow-lg my-0">
+	      <div class="card-body p-0">
+		<!-- Nested Row within Card Body -->
+		<div class="row">
+		  
+		  <div class="col-lg-12">
+		    <div class="p-5">
+		      <form class="user">
+		        <div class="form-group row">
+			  <div class="col-sm-6 mb-3 mb-sm-0">
+		            <input type="text" class="form-control form-control-user" id="placa" placeholder="Placa">
+		          </div>
+			  <div class="col-sm-6">
+		            <input type="text" class="form-control form-control-user" id="marca" placeholder="Marca">
+		          </div>
+		        </div>
+			<div class="form-group row">
+		          <div class="col-sm-6 mb-3 mb-sm-0">
+		            <input type="email" class="form-control form-control-user" id="model" placeholder="Modelo">
+		          </div>
+		          <div class="col-sm-6">
+		            <input type="text" class="form-control form-control-user" id="color" placeholder="Color">
+		          </div>
+			</div>
+			<div class="form-group row">
+			  <div class="col-sm-6 mb-3 mb-sm-0">
+		            <input type="text" class="form-control form-control-user" id="comb" placeholder="Combustible">
+		          </div>
+		        </div>
+			<a href="#" class="btn btn-primary btn-user btn-block">
+		          <input  class="btn btn-primary btn-user btn-block" id="sig3" value="Subir"> 
+		        </a>
+			
+		      </form>
+		      
+		      
+		    </div>
+		  </div>
+		</div>
+	      </div>
+	    </div>
+
+	  </div>
+
+        </div>
         <!-- /.container-fluid -->
 
       </div>
@@ -194,22 +231,22 @@
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+          <h5 class="modal-title" id="exampleModalLabel">Seguro quieres salir?</h5>
           <button class="close" type="button" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">×</span>
           </button>
         </div>
-        <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
         <div class="modal-footer">
-          <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-          <a class="btn btn-primary" href="login.html">Logout</a>
+          <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancelar</button>
+          <a class="btn btn-primary" href="login.html">Salir</a>
         </div>
       </div>
     </div>
   </div>
 
   <!-- Bootstrap core JavaScript-->
-<script src="js/datos.js"></script>
+
+  <script src="js/datos.js"></script>
 
   <script src="vendor/jquery/jquery.min.js"></script>
   <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
@@ -221,101 +258,12 @@
   <script src="js/sb-admin-2.min.js"></script>
 
   <!-- Page level plugins -->
-  <script src="vendor/datatables/jquery.dataTables.min.js"></script>
-  <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
+  <script src="vendor/chart.js/Chart.min.js"></script>
 
   <!-- Page level custom scripts -->
-  <script src="js/demo/datatables-demo.js"></script>
+  <script src="js/demo/chart-area-demo.js"></script>
+  <script src="js/demo/chart-pie-demo.js"></script>
 
 </body>
 
 </html>
-
-<script>
-$(document).ready(function(){
- $('#load_data').click(function(){
-  $.ajax({
-   url:"datos.csv",
-   dataType:"text",
-   success:function(data)
-   {
-    data_data = data.split(/\r?\n|\r/);
-    console.log(data_data);
-    var table_data = '<table class="table table-bordered table-striped">';
-    for(var count = 0; count<data_data.length; count++)
-    {
-     var cell_data = data_data[count].split(";");
-     table_data += '<tr>';
-
-     for(var cell_count=0; cell_count<cell_data.length; cell_count++)
-     {
-      if(count === 0)
-      {
-       table_data += '<th>'+cell_data[cell_count]+'</th>';
-      }
-      else
-      {
-       table_data += '<td>'+cell_data[cell_count]+'</td>';
-      }
-     }
-     table_data += '</tr>';
-    }
-    table_data += '</table>';
-    $('#data_table').html(table_data);
-   }
-  });
-
-
-
- });
-  $('#env').click(function () {
-	console.log("env");
-	$.ajax({
-	   url:"datos.csv",
-	   dataType:"text",
-	   success:function(data)
-	   {
-
-
-		var arreglo_jsons= [];
-	    data_data = data.split(/\r?\n|\r/);
-	    for(var i=1; i < data_data.length-1; i++){
-		var celld = data_data[i].split(";");
-		var email = celld[0];
-		var cod_es = celld[1];
-		 arreglo_jsons[i-1] = {
-		            "email": email,
-		            "id_Carnet": cod_es
-                	}
-		
-		}
-		var json_completo={"driverList":arreglo_jsons}
-	    
-		console.log(json_completo);
-		var settings = {
-                "async": true,
-                "crossDomain": true,
-                "url": "https://autoparkingeafit.herokuapp.com/api/registerDriverExcel",
-                "method": "POST",
-                "headers": {
-                    "content-type": "application/json",
-                    "cache-control": "no-cache",
-                    "postman-token": "400a153e-2435-400e-816b-cfc89dd1d439"
-                },
-                "processData": false,
-                "data": JSON.stringify(json_completo)
-}
-            $.ajax(settings).done(function (data) {
-                console.log("bien");
-                
-            }).fail(function (data) {
-                console.log("mal");
-            });
-	    
-	  }
-	  });
-
-    });
- 
-});
-</script>
