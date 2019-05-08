@@ -22,7 +22,8 @@ function createDriverWeb(req,res){
     }
 
     var id_addressF = AddressController.createAddress(addressJson);
-    if (id_addressF) {
+    console.log(id_addressF);
+    if (id_addressF == null) {
         return res.status(500).send({ message: `Error al almacenar conductor: Falla almacenando informacion de direccion` })
     }
 
@@ -44,21 +45,23 @@ function createDriverWeb(req,res){
 
     //Buscar para actualizar y crear
     let emailFind = req.body.email
-    Driver.updateOne({'email': emailFind},driver,{upsert: true},function(err, driverFound){
+    Driver.updateOne({'email': emailFind},driver,{upsert: true},function(err){
         if(err) return res.status(500).send({message: `Error al registrar usuario: ${err}`})
-        var carJson = {
-            car_plate: req.body.car_plate,
-            model: req.body.model,
-            color: req.body.color,
-            gas: req.body.gas,
-            id_driverF: driverFound._id
-        }
-
-        if (CarController.createCar(carJson)) {
-            return res.status(500).send({ message: `Error al almacenar conductor: Falla almacenando informacion del vehículo` })
-        }
-
-        return res.status(200).send({ message: `Conductor almacenado/actualizado ${driverFound._id} ${id_addressF}` })
+        Driver.findOne({'email': emailFind}, '_id', function(err, driver){
+            console.log(driver._id);
+            var carJson = {
+                car_plate: req.body.car_plate,
+                model: req.body.model,
+                color: req.body.color,
+                gas: req.body.gas,
+                id_driverF: driver._id
+            }
+    
+            if (CarController.createCar(carJson) == null) {
+                return res.status(500).send({ message: `Error al almacenar conductor: Falla almacenando informacion del vehículo` })
+            }
+        })
+        return res.status(200).send({ message: `Conductor almacenado/actualizado` })
     })
 }
 

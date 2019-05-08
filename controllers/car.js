@@ -6,10 +6,11 @@ function createCar(data) {
     
     const car = new Car(data);
 
+    var id = car._id;
     car.save((err, car) => {
-        if (err) return true
-        return car._id
+        if (err) return null
     })
+    return id;  
 }
 
 function showCars(req,res){

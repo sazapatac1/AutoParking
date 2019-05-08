@@ -4,6 +4,7 @@ const express = require('express')
 const userController = require('../controllers/user')
 const driverController = require('../controllers/driver')
 const carController = require('../controllers/car')
+const addressController = require('../controllers/address')
 const parkingLotController = require('../controllers/parkingLot')
 const api = express.Router()
 const auth = require('../middlewares/auth')
@@ -30,6 +31,9 @@ api.get('/showDrivers',driverController.showDrivers)
 //mostrar carros
 api.get('/showCars', carController.showCars)
 
+//mostrar direccions
+api.get('/showAddress',addressController.showAddress)
+
 //verificar carnet
 api.post('/verifyCarnet/', driverController.verifyDriver)
 
@@ -45,7 +49,6 @@ api.post('/deleteDriver',driverController.deleteDriver)
 
 //crear lote de parqueader
 api.post('/createCells',parkingLotController.createParkingLot)
-
 //incrementar celda
 api.post('/increaseCells',parkingLotController.increaseCells)
 
