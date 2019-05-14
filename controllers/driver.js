@@ -4,6 +4,7 @@ const Driver = require('../models/driver')
 const Address = require('../models/address')
 const Car = require('../models/car')
 const service = require('../services')
+
 // libreria moment(manejar tiempo)
 const moment = require('moment')
 const AddressController = require('./address')
@@ -22,7 +23,7 @@ function createDriverWeb(req,res){
     }
 
     var id_addressF = AddressController.createAddress(addressJson);
-    console.log(id_addressF);
+    
     if (id_addressF == null) {
         return res.status(500).send({ message: `Error al almacenar conductor: Falla almacenando informacion de direccion` })
     }
