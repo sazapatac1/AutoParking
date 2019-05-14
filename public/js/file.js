@@ -21,11 +21,11 @@ $(document).ready(function () {
         if (regex.test(fileUpload.value.toLowerCase())) {
             if (typeof (FileReader) != "undefined") {
                 var reader = new FileReader();
-
+                var data;
                 //For Browsers other than IE.
                 if (reader.readAsBinaryString) {
                     reader.onload = function (e) {
-                        ProcessExcel(e.target.result);
+                        data = ProcessExcel(e.target.result);
                     };
                     reader.readAsBinaryString(fileUpload.files[0]);
                 } else {
@@ -36,10 +36,13 @@ $(document).ready(function () {
                         for (var i = 0; i < bytes.byteLength; i++) {
                             data += String.fromCharCode(bytes[i]);
                         }
-                        ProcessExcel(data);
+                        data = ProcessExcel(data);
                     };
                     reader.readAsArrayBuffer(fileUpload.files[0]);
                 }
+
+                callRequest(data);
+
             } else {
                 alert("This browser does not support HTML5.");
             }
@@ -59,15 +62,19 @@ $(document).ready(function () {
 
         //Read all rows from First Sheet into an JSON array.
         var excelRows = XLSX.utils.sheet_to_row_object_array(workbook.Sheets[firstSheet]);
-
-        
            
-
+        var data = [];
+        
         //Add the data rows from Excel file.
         for (var i = 0; i < excelRows.length; i++) {
-            
-            console.log(excelRows[i]);
+            data[i] = excelRows[i];
         }
+
+        return data;
+    };
+
+    function callRequest(data){
+
     };
 
 });
