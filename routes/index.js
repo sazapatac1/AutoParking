@@ -20,13 +20,13 @@ api.get('/api/usuarios',userController.showUser)
 
 
 //Registar conductor desde web
-api.post('/api/registerDriver',driverController.createDriverWeb)
+api.post('/api/registerDriver',auth, driverController.createDriverWeb)
 
 //Registrar conductor desde excel
 api.post('/api/registerDriverExcel',driverController.createDriverExcel)
 
 //mostrar conductores
-api.get('/api/showDrivers',driverController.showDrivers)
+api.get('/api/showDrivers', auth, driverController.showDrivers)
 
 //mostrar carros
 api.get('/api/showCars', carController.showCars)
@@ -70,8 +70,8 @@ api.post('/api/showTheCells', parkingLotController.showAParkingLot)
 //Views
 api.get('/', viewController.redirectLogin)
 api.get('/login', viewController.showLogin)
-api.get('/drivers', viewController.showDrivers)
-api.get('/updateDrivers', viewController.showUpdateDrivers)
+api.get('/conductores', viewController.showDrivers)
+api.get('/actualizarConductores', viewController.showUpdateDrivers)
 api.get('/archivo', viewController.showArchivo)
 api.get('/estadisticas', viewController.showStadistics)
 

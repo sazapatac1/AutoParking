@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <title>Actualizar Conductores</title>
+
+  <!-- Custom fonts for this template-->
+  <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+  <link
+    href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+    rel="stylesheet">
+
+  <!-- Custom styles for this template-->
+  <link href="css/sb-admin-2.min.css" rel="stylesheet">
+
+</head>
+
+<body id="page-top">
+
+  <!-- Page Wrapper -->
+  <div id="wrapper">
+
+    <!-- Sidebar -->
+    <ul class="navbar-nav bg-gradient-info sidebar sidebar-dark accordion" id="accordionSidebar">
+
+      <!-- Sidebar - Brand -->
+      <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+        <div class="sidebar-brand-text mx-3">Auto Parking</div>
+      </a>
+
+      <!-- Divider -->
+      <hr class="sidebar-divider my-0">
+
+      <!-- Conductores -->
+      <li class="nav-item active">
+        <a class="nav-link" href="index.html">
+          <i class="fas fa-car"></i>
+          <span>Conductores</span></a>
+      </li>
+
+
+      <!-- Archivo -->
+      <li class="nav-item">
+        <a class="nav-link" href="index.html">
+          <i class="fas fa-file-excel"></i>
+          <span>Archivo</span></a>
+      </li>
+
+
+      <!-- Nav Item - Tables -->
+      <li class="nav-item">
+        <a class="nav-link" href="tables.html">
+          <i class="fas fa-chart-bar"></i>
+          <span>Estadísticas</span></a>
+      </li>
+
+      <!-- Divider -->
+      <hr class="sidebar-divider d-none d-md-block">
+
+      <!-- Sidebar Toggler (Sidebar) -->
+      <div class="text-center d-none d-md-inline">
+        <button class="rounded-circle border-0" id="sidebarToggle"></button>
+      </div>
+
+    </ul>
+    <!-- End of Sidebar -->
+
+    <!-- Content Wrapper -->
+    <div id="content-wrapper" class="d-flex flex-column">
+
+      <!-- Main Content -->
+      <div id="content">
+
+        <!-- Logout -->
+        <div class="row" style="background-color: white; padding-top: 20px; padding-bottom: 20px">
+          <div class="col-10"></div>
+          <div class="col-2">
+            <a class="dropdown-item" id="btnLogout" href="#">
+              <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+              Cerrar Sesión
+            </a>
+          </div>
+        </div>
+        <!-- End of Topbar -->
+
+        <!-- Begin Page Content -->
+        <div class="container-fluid">
+
+          <div class="text-center" id="alertError">
+            <div class="error mx-auto" data-text="404">404</div>
+            <p class="lead text-gray-800 mb-5">Acceso no autorizado</p>
+            <p class="text-gray-500 mb-0">Debes acceder al sistema para poder usarlo...</p>
+
+          </div>
+
+          <div class="alert alert-success" role="alert" id="alert1">
+            Formulario Actualizado
+          </div>
+
+          <div class="alert alert-danger" role="alert" id="alert2">
+            Ha ocurrido un error al actualizar
+          </div>
+
+
+          <!-- Page Heading -->
+          <h1 class="h3 mb-4 mt-4 text-gray-800" id="tittleCard">Información personal</h1>
+
+          <!-- Default Card Example -->
+          <div class="card mb-4 shadow">
+            <div class="card-body" id="cardForm1">
+
+              <div class="progress progress mb-4">
+                <div class="progress-bar" role="progressbar" style="width: 33%" aria-valuenow="75" aria-valuemin="0"
+                  aria-valuemax="100"></div>
+              </div>
+
+              <br>
+              <br>
+
+
+              <div class="form-group row">
+
+                <div class="col-sm-6 mb-3 mb-sm-0">
+                  <input type="text" class="form-control" id="name1" placeholder="Primer Nombre">
+                </div>
+                <div class="col-sm-6">
+                  <input type="text" class="form-control" id="name2" placeholder="Segundo Nombre">
+                </div>
+              </div>
+              <div class="form-group row">
+                <div class="col-sm-6 mb-3 mb-sm-0">
+                  <input type="text" class="form-control" id="last_name1" placeholder="Primer Apellido">
+                </div>
+
+                <div class="col-sm-6">
+                  <input type="text" class="form-control" id="last_name2" placeholder="Segundo Apellido">
+                </div>
+              </div>
+
+              <div class="form-group row">
+                <div class="col-sm-6 mb-3 mb-sm-0">
+                  <input type="date" class="form-control" id="date" placeholder="Nacimiento">
+                </div>
+
+                <div class="col-sm-6 mb-3 mb-sm-0">
+                  <input type="email" class="form-control" id="email" placeholder="Correo">
+                </div>
+              </div>
+
+              <div class="form-group row">
+
+                <div class="col-sm-1">
+                  <p>Género</p>
+                </div>
+                <div class="form-check col-sm-2">
+                  <input class="form-check-input" type="radio" name="genero" value="M" checked>
+                  <label class="form-check-label">
+                    Másculino
+                  </label>
+                </div>
+                <div class="form-check col-sm-2">
+                  <input class="form-check-input" type="radio" name="genero" value="F">
+                  <label class="form-check-label">
+                    Femenino
+                  </label>
+                </div>
+
+                <div class="col-sm-1">
+                </div>
+
+                <div class="col-sm-1">
+                  <p>Estado</p>
+                </div>
+                <div class="form-check col-sm-2">
+                  <input class="form-check-input" type="radio" name="status" value="true" checked>
+                  <label class="form-check-label">
+                    Activo
+                  </label>
+                </div>
+                <div class="form-check col-sm-2">
+                  <input class="form-check-input" type="radio" name="status" value="false">
+                  <label class="form-check-label">
+                    Inactivo
+                  </label>
+                </div>
+
+              </div>
+
+              <div class="form-group row">
+                <div class="col-sm-6 mb-3 mb-sm-0">
+                  <input type="number" class="form-control" id="id_carnet" placeholder="Id Carné">
+                </div>
+                <div class="col-sm-6">
+                  <input type="text" class="form-control" id="id_internalCarnet" placeholder="Id Carné Físico">
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-sm-10"></div>
+                <div class="col-sm-2">
+                  <a href="#" class="btn btn-info " style="margin-left: 60px" id="btnForm1">
+                    Siguiente
+                  </a>
+                </div>
+              </div>
+
+            </div>
+
+            <div class=" card-body" id="cardForm2">
+              <div class="progress progress mb-4">
+                <div class="progress-bar" role="progressbar" style="width: 66%" aria-valuenow="75" aria-valuemin="0"
+                  aria-valuemax="100"></div>
+              </div>
+
+              <a href="#" class="btn btn-info btn-circle" id="backForm1">
+                <i class="fas fa-arrow-left"></i>
+              </a>
+
+              <br>
+              <br>
+
+              <div class="form-group">
+
+                <div class="row">
+
+                  <div class="col-sm-12">
+
+                    <div class="row mb-4">
+                      <div class="col-sm-12 mb-3 mb-sm-0">
+
+                        <select class=" form-control form-control-user" id="city">
+                          <option>Sabaneta</option>
+                          <option>Medellín</option>
+                          <option>Bello</option>
+                          <option>Envigado</option>
+                          <option>Itagüí</option>
+                          <option>La estrella</option>
+                          <option>Copacabana</option>
+                          <option>Rionegro</option>
+                        </select>
+                      </div>
+                    </div>
+
+                    <div class="row mb-4">
+                      <div class="col-sm-3 ">
+                        <select class=" form-control form-control-user" id="add1">
+                          <option>Calle</option>
+                          <option>Carrera</option>
+                          <option>Avenida</option>
+                          <option>Avenida Carrera</option>
+                          <option>Avenida Calle</option>
+                          <option>Circular</option>
+                          <option>Circunvalar</option>
+                          <option>Diagonal</option>
+                          <option>Transversal</option>
+                          <option>Vía</option>
+                        </select>
+                      </div>
+
+                      <div class="col-sm-3 ">
+                        <input type="text" class="form-control" id="add2" placeholder="">
+                      </div>
+
+
+                      <div class="col-sm-3 ">
+                        <input type="text" class="form-control" id="add3" placeholder="#">
+                      </div>
+                      <div class="col-sm-3 ">
+                        <input type="text" class="form-control" id="add4" placeholder="-">
+                      </div>
+                    </div>
+                  </div>
+
+                </div>
+
+
+                <div class="row">
+                  <div class="col-sm-10"></div>
+                  <div class="col-sm-2">
+                    <a href="#" class="btn btn-info " style="margin-left: 60px" id="btnForm2">
+                      Siguiente
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="card-body" id="cardForm3">
+              <div class="progress progress mb-4">
+                <div class="progress-bar" role="progressbar" style="width: 100%" aria-valuenow="75" aria-valuemin="0"
+                  aria-valuemax="100"></div>
+              </div>
+
+              <a href="#" class="btn btn-info btn-circle" id="backForm2">
+                <i class="fas fa-arrow-left"></i>
+              </a>
+
+              <br>
+              <br>
+
+              <div class="form-group row">
+                <div class="col-sm-6 mb-3 mb-sm-0">
+                  <input type="text" class="form-control" id="car_plate" placeholder="Placa">
+                </div>
+                <div class="col-sm-6">
+                  <input type="number" class="form-control" id="model" placeholder="Modelo / Año">
+                </div>
+              </div>
+
+              <div class="form-group row">
+                <div class="col-sm-6 mb-3 mb-sm-0">
+                  <select class=" form-control form-control-user" id="color">
+                    <option>Blanco</option>
+                    <option>Negro</option>
+                    <option>Rojo</option>
+                    <option>Azul</option>
+                    <option>Plateado</option>
+                    <option>Verde</option>
+                  </select>
+                </div>
+                <div class="col-sm-6">
+                  <select class=" form-control form-control-user" id="gas">
+                    <option>Disel</option>
+                    <option>Eléctrico</option>
+                    <option>Corriente</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-sm-10"></div>
+                <div class="col-sm-2">
+                  <a href="#" class="btn btn-info " style="margin-left: 60px" id="btnForm3">
+                    Finalizar
+                  </a>
+                </div>
+              </div>
+
+            </div>
+          </div>
+          <!-- /.container-fluid -->
+
+        </div>
+        <!-- End of Main Content -->
+
+        <!-- Footer -->
+        <footer class="sticky-footer bg-white">
+          <div class="container my-auto">
+            <div class="copyright text-center my-auto">
+              Universidad Eafit - Auto Parking
+            </div>
+          </div>
+        </footer>
+        <!-- End of Footer -->
+
+      </div>
+      <!-- End of Content Wrapper -->
+
+    </div>
+    <!-- End of Page Wrapper -->
+
+    <!-- Scroll to Top Button-->
+    <a class="scroll-to-top rounded" href="#page-top">
+      <i class="fas fa-angle-up"></i>
+    </a>
+
+
+    <!-- Bootstrap core JavaScript-->
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Core plugin JavaScript-->
+    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+
+    <!-- Custom scripts for all pages-->
+    <script src="js/sb-admin-2.min.js"></script>
+
+    <!-- Page level plugins -->
+    <script src="vendor/datatables/jquery.dataTables.min.js"></script>
+    <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
+
+    <!-- Page level custom scripts -->
+    <script src="js/demo/datatables-demo.js"></script>
+
+    <!-- Js Drivers-->
+    <script src="js/updateDrivers.js"></script>
+
+    <!-- Js to save cookies-->
+    <script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
+
+</body>
+
+</html>

@@ -1,12 +1,8 @@
 'use strict'
 
 const Driver = require('../models/driver')
-const Address = require('../models/address')
-const Car = require('../models/car')
 const service = require('../services')
 
-// libreria moment(manejar tiempo)
-const moment = require('moment')
 const AddressController = require('./address')
 const CarController = require('./car')
 const ParkingLotController = require('./parkingLot')
@@ -17,9 +13,7 @@ function createDriverWeb(req,res){
         add1: req.body.add1,
         add2: req.body.add2,
         add3: req.body.add3,
-        add4: req.body.add4,
-        latitude: req.body.latitude,
-        longitude: req.body.longitude
+        add4: req.body.add4
     }
 
     var id_addressF = AddressController.createAddress(addressJson);
@@ -36,11 +30,10 @@ function createDriverWeb(req,res){
         date: req.body.date,
         email: req.body.email,
         gender: req.body.gender,
-        //falta status porque solo lo cambia el excel
+        status: req.body.status,
         into: false,
         id_carnet: req.body.id_carnet,
         id_internalCarnet: req.body.id_internalCarnet,
-        //pendiente para cuando se este creando poner el id foraneo de address
         id_addressF: id_addressF
     }
 

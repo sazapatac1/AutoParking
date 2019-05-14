@@ -12,7 +12,7 @@ $(document).ready(function () {
         } else {
 
             var settings = {
-                "async": true,
+                "async": false,
                 "crossDomain": true,
                 "url": "api/signin",
                 "method": "POST",
@@ -31,8 +31,8 @@ $(document).ready(function () {
                 Cookies.set('userId', data.userId);
                 Cookies.set('userName', data.userName);
                 Cookies.set('userEmail', data.userEmail);
-
-                //window.location.replace('/index.html');
+                
+                window.location.replace('/conductores');
 
             }).fail(function (data) {
                 $('#alert1').html(data.responseJSON.message);
