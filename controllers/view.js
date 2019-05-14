@@ -19,7 +19,7 @@ function showUpdateDrivers(req, res) {
 }
 
 function showArchivo(req, res){
-    res.sendFile(path.resolve('public/archivo.html'))
+    res.sendFile(path.resolve('public/file.html'))
 }
 
 function showStadistics(req, res){

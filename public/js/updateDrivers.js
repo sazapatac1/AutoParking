@@ -1,13 +1,22 @@
 $(document).ready(function () {
 
+
+
     $('#cardForm1').show();
     $('#cardForm2').hide();
     $('#cardForm3').hide();
 
     $('#alert1').hide();
     $('#alert2').hide();
+    
+    
+    if(Cookies.get('token') == undefined){
+        $('#alertError').show();
+        $('#cardForm1').hide();
+    }else{
+        $('#alertError').hide();
+    }
 
-    $('#alertError').hide();
 
     $("#btnLogout").click(function () {
         Cookies.remove('token');
@@ -84,16 +93,12 @@ $(document).ready(function () {
             "data": JSON.stringify(dataSet)
         }
 
-        $.ajax(settings).done(function (response) {
+        $.ajax(settings).done(function (data) {
             $('#alert1').show();
-            console.log(response);
+            $('#cardForm3').hide();
         }).fail(function (){
             $('#alert2').show();
         });
     });
-
-
-
-
 
 });
