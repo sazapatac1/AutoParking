@@ -26,7 +26,7 @@ api.post('/api/registerDriver',auth, driverController.createDriverWeb)
 api.post('/api/registerDriverExcel',driverController.createDriverExcel)
 
 //mostrar conductores
-api.get('/api/showDrivers', auth, driverController.showDrivers)
+api.get('/api/showDrivers', driverController.showDrivers)
 
 //mostrar carros
 api.get('/api/showCars', carController.showCars)

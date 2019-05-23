@@ -22,8 +22,16 @@ function showCars(req,res){
     })
 }
 
+function getCar(driver_id){
+    Car.findOne({'id_driverF':driver_id},'car_plate',(err,car)=>{
+        if(err) return console.log('Error al encontrar carro')
+        console.log(car.car_plate)
+        return car.plate
+    })
+}
 
 module.exports = {
     createCar,
-    showCars
+    showCars,
+    getCar
 }

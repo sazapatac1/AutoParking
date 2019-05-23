@@ -22,7 +22,20 @@ function showAddress(req,res){
     })
 }
 
+function getAddress(_id){
+    let id = _id
+    let addresar
+    Address.findById(_id,(err,address)=>{
+        if(err) return console.log('Error al encontrar direccion')
+        if(!address) return console.log('Direccion no existe')
+        addresar = address
+        console.log(addresar)
+        return {address}
+    })
+}
+
 module.exports = {
     createAddress,
-    showAddress
+    showAddress,
+    getAddress
 }

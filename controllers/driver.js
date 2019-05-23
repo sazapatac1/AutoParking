@@ -64,7 +64,29 @@ function showDrivers(req,res){
     Driver.find({},(err,drivers) =>{
         if(err) return res.status(500).send({message : `Error al realizar la petición: ${err}` })
         if(!drivers) return res.status(404).send({message: `No existen conductores`})
-        res.status(200).send({drivers})
+        var driversToShow = {
+            driversS:[]
+        }
+        for(var i = 0; i < drivers.length;i++){
+            let address = AddressController.getAddress('5ca685badb8a0656e3f51a65')
+            console.log(address)
+            let driverToSend = {
+                name1: drivers[i].name1,
+                name2: drivers[i].name2,
+                last_name1: drivers[i].last_name1,
+                last_name2: drivers[i].last_name2,
+                date: drivers[i].date,
+                email: drivers[i].email,
+                gender: drivers[i].gender,
+                status: drivers[i].status,
+                into: drivers[i].into,
+                id_carnet: drivers[i].id_carnet,
+                id_internalCarnet: drivers[i].id_internalCarnet,
+                id_addressF: drivers[i].id_addressF,
+            }
+            driversToShow.driversS.push(driverToSend)
+        }
+        res.status(200).send({driversToShow})
     })
 }
 
