@@ -22,15 +22,11 @@ function showArchivo(req, res){
     res.sendFile(path.resolve('public/file.html'))
 }
 
-function showStadistics(req, res){
-    res.sendFile(path.resolve('public/stadistics.html'))
-}
 
 module.exports = {
     redirectLogin,
     showLogin,
     showUpdateDrivers,
     showDrivers,
-    showArchivo,
-    showStadistics
+    showArchivo
 }

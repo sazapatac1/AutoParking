@@ -1,6 +1,15 @@
 $(document).ready(function () {
 
-    $('#alertError').hide();
+    if (Cookies.get('token') == undefined) {
+        $('#alertError').show();
+        $('#cardTabla').hide();
+    } else {
+        $('#alertError').hide();
+    }
+
+
+    $('#alert1').hide();
+    $('#alert2').hide();
 
     $("#btnLogout").click(function () {
         Cookies.remove('token');
@@ -9,9 +18,12 @@ $(document).ready(function () {
         Cookies.remove('userEmail');
 
         window.location.replace('/login');
+        console.log("entre?");
     });
 
 
+
+    
     $('#upload').click(function () {
         //Reference the FileUpload element.
         var fileUpload = $("#fileUpload")[0];
@@ -21,11 +33,10 @@ $(document).ready(function () {
         if (regex.test(fileUpload.value.toLowerCase())) {
             if (typeof (FileReader) != "undefined") {
                 var reader = new FileReader();
-                var data;
                 //For Browsers other than IE.
                 if (reader.readAsBinaryString) {
                     reader.onload = function (e) {
-                        data = ProcessExcel(e.target.result);
+                        ProcessExcel(e.target.result);
                     };
                     reader.readAsBinaryString(fileUpload.files[0]);
                 } else {
@@ -36,18 +47,17 @@ $(document).ready(function () {
                         for (var i = 0; i < bytes.byteLength; i++) {
                             data += String.fromCharCode(bytes[i]);
                         }
-                        data = ProcessExcel(data);
+                        ProcessExcel(data);
                     };
                     reader.readAsArrayBuffer(fileUpload.files[0]);
                 }
-
-                callRequest(data);
-
             } else {
                 alert("This browser does not support HTML5.");
             }
         } else {
-            alert("Please upload a valid Excel file.");
+            $('#alert1').hide();
+            $('#alert2').show();
+            $('#alert2').text('Porfavor ingresa un documento Excel');
         }
     });
 
@@ -62,19 +72,70 @@ $(document).ready(function () {
 
         //Read all rows from First Sheet into an JSON array.
         var excelRows = XLSX.utils.sheet_to_row_object_array(workbook.Sheets[firstSheet]);
-           
-        var data = [];
-        
+
+        var array = [];
+
         //Add the data rows from Excel file.
         for (var i = 0; i < excelRows.length; i++) {
-            data[i] = excelRows[i];
+            array[i] = excelRows[i];
         }
 
-        return data;
+        data = {
+            'driverList': array
+        }
+
+        callRequest(data);
+
     };
 
-    function callRequest(data){
+    
+
+    function callRequest(data) {
+
+        var settings = {
+            "async": true,
+            "crossDomain": true,
+            "url": "api/registerDriverExcel",
+            "method": "POST",
+            "headers": {
+                "content-type": "application/json",
+                "authorization": Cookies.get('token'),
+                "cache-control": "no-cache"
+
+            },
+            "processData": false,
+            "data": JSON.stringify(data)
+        }
+
+        $.ajax(settings).done(function (response) {
+
+            var dataSet = data;
+            console.log(data.driverList);
+
+            dataTable = $('#tabla').DataTable({
+                select: {
+                    items: 'row'
+                },
+                data: dataSet.driverList,
+                columns: [
+                    { data: 'email' },
+                    { data: 'id_Carnet'}
+                ]
+            });
+
+            $('#alert2').hide();
+            $('#alert1').show();
+            $('#alert1').text('Conductores actualizados.');
+
+        }).fail(function () {
+            $('#alert1').hide();
+            $('#alert2').show();
+            $('#alert2').text('Error al guardar la nueva lista de beneficiarios.');
+
+        });
 
     };
+
+
 
 });
