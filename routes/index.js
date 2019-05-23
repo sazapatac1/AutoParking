@@ -73,7 +73,6 @@ api.get('/login', viewController.showLogin)
 api.get('/conductores', viewController.showDrivers)
 api.get('/actualizarConductores', viewController.showUpdateDrivers)
 api.get('/archivo', viewController.showArchivo)
-api.get('/estadisticas', viewController.showStadistics)
 
 
 module.exports = api

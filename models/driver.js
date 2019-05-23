@@ -16,8 +16,9 @@ const DriverSchema = new Schema({
     status: { type: Boolean },
     into: { type: Boolean },
     id_carnet: { type: Number },
-    id_internalCarnet: { type: String },
-    id_addressF: { type: String }
+    id_internalCarnet: { type: String},
+    id_addressF: { type: String },
+    times: {type: Number, default:0}
 
 })
 

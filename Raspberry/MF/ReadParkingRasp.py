@@ -24,6 +24,13 @@
 import RPi.GPIO as GPIO
 import MFRC522
 import signal
+import requests
+import time
+
+GPIO.setmode(GPIO.BOARD)
+
+GPIO.setup(32, GPIO.OUT) #Verde
+GPIO.setup(37, GPIO.OUT) #Rojo
 
 continue_reading = True
 
@@ -41,7 +48,6 @@ signal.signal(signal.SIGINT, end_read)
 MIFAREReader = MFRC522.MFRC522()
 
 # Welcome message
-print "Welcome to the MFRC522 data read example"
 print "Press Ctrl-C to stop."
 
 # This loop keeps checking for chips. If one is near it will get the UID and authenticate
@@ -62,20 +68,27 @@ while continue_reading:
 
         # Print UID
         print "Card read UID: %s,%s,%s,%s" % (uid[0], uid[1], uid[2], uid[3])
-    
-        # This is the default key for authentication
-        key = [0xFF,0xFF,0xFF,0xFF,0xFF,0xFF]
+
+        id_carne = str(uid[0]) + str(uid[1])  + str(uid[2]) + str(uid[3])
+
+        print(id_carne)
         
-        # Select the scanned tag
-        MIFAREReader.MFRC522_SelectTag(uid)
+        r = requests.post('https://autoparkingeafit.herokuapp.com/api/verifyCarnet' ,data = {'id_carnetFind': id_carne})
 
-        # Authenticate
-        status = MIFAREReader.MFRC522_Auth(MIFAREReader.PICC_AUTHENT1A, 8, key, uid)
+        r = r.json()
 
-        # Check if authenticated
-        if status == MIFAREReader.MI_OK:
-            MIFAREReader.MFRC522_Read(8)
-            MIFAREReader.MFRC522_StopCrypto1()
+        
+
+        if r['access']:
+            print ("Hay Acceso!!")
+            GPIO.output(32, GPIO.HIGH)
+            time.sleep(5)
+            GPIO.output(32, GPIO.LOW)
         else:
-            print "Authentication error"
+            print("No Hay Acceso...")
+            GPIO.output(37, GPIO.HIGH)
+            time.sleep(5)
+            GPIO.output(37, GPIO.LOW)
 
+        
+        

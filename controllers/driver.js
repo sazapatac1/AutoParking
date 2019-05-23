@@ -7,7 +7,7 @@ const AddressController = require('./address')
 const CarController = require('./car')
 const ParkingLotController = require('./parkingLot')
 
-function createDriverWeb(req,res){
+function createDriverWeb(req, res) {
     var addressJson = {
         city: req.body.city,
         add1: req.body.add1,
@@ -17,7 +17,7 @@ function createDriverWeb(req,res){
     }
 
     var id_addressF = AddressController.createAddress(addressJson);
-    
+
     if (id_addressF == null) {
         return res.status(500).send({ message: `Error al almacenar conductor: Falla almacenando informacion de direccion` })
     }
@@ -39,9 +39,9 @@ function createDriverWeb(req,res){
 
     //Buscar para actualizar y crear
     let emailFind = req.body.email
-    Driver.updateOne({'email': emailFind},driver,{upsert: true},function(err){
-        if(err) return res.status(500).send({message: `Error al registrar usuario: ${err}`})
-        Driver.findOne({'email': emailFind}, '_id', function(err, driver){
+    Driver.updateOne({ 'email': emailFind }, driver, { upsert: true }, function (err) {
+        if (err) return res.status(500).send({ message: `Error al registrar usuario: ${err}` })
+        Driver.findOne({ 'email': emailFind }, '_id', function (err, driver) {
             console.log(driver._id);
             var carJson = {
                 car_plate: req.body.car_plate,
@@ -50,7 +50,7 @@ function createDriverWeb(req,res){
                 gas: req.body.gas,
                 id_driverF: driver._id
             }
-    
+
             if (CarController.createCar(carJson) == null) {
                 return res.status(500).send({ message: `Error al almacenar conductor: Falla almacenando informacion del vehículo` })
             }
@@ -59,7 +59,7 @@ function createDriverWeb(req,res){
     })
 }
 
-function showDrivers(req,res){
+function showDrivers(req, res) {
     //buscar todo en base de datos
     Driver.find({},(err,drivers) =>{
         if(err) return res.status(500).send({message : `Error al realizar la petición: ${err}` })
@@ -68,8 +68,8 @@ function showDrivers(req,res){
             driversS:[]
         }
         for(var i = 0; i < drivers.length;i++){
-            let address = AddressController.getAddress('5ca685badb8a0656e3f51a65')
-            console.log(address)
+            //let address = AddressController.getAddress('5ca685badb8a0656e3f51a65')
+            //console.log(address)
             let driverToSend = {
                 name1: drivers[i].name1,
                 name2: drivers[i].name2,
@@ -83,6 +83,7 @@ function showDrivers(req,res){
                 id_carnet: drivers[i].id_carnet,
                 id_internalCarnet: drivers[i].id_internalCarnet,
                 id_addressF: drivers[i].id_addressF,
+                times: drivers[i].times
             }
             driversToShow.driversS.push(driverToSend)
         }
@@ -91,67 +92,89 @@ function showDrivers(req,res){
 }
 
 
-function verifyDriver(req,res){
+function verifyDriver(req, res) {
     let id_carnetFind = req.body.id_carnetFind
-    Driver.findOne({'id_internalCarnet': id_carnetFind}, '_id status into', function(err, driver){
-        if(err) return res.status(500).send({message: `Error al encontrar el usuario: ${err}`})
-        if(!driver){ return res.status(200).send({access: false})}
-        if(driver.status){
-            if(driver.into){
+    Driver.findOne({ 'id_internalCarnet': id_carnetFind }, '_id status into', function (err, driver) {
+        if (err) return res.status(500).send({ message: `Error al encontrar el usuario: ${err}` })
+        if (!driver) { return res.status(200).send({ access: false }) }
+        if (driver.status) {
+            if (driver.into) {
+                //incrementando el número de celdas
                 ParkingLotController.increaseCells("EAFIT")
-                Driver.updateOne({'_id':driver._id},{into: false},function(err){
-                    if(err) return res.status(500).send({message: `Error al registrar usuario: ${err}`})
+                Driver.updateOne({ '_id': driver._id }, { into: false }, function (err) {
+                    if (err) return res.status(500).send({ message: `Error al registrar usuario: ${err}` })
                     console.log('into: false')
                 })
             }
-            
-            if(!driver.into){
+
+            if (!driver.into) {
+                //incrementando las veces usadas en el proyecto
+                increaseTimes(driver._id)
+                // decrementando el número de celdas
                 ParkingLotController.decreaseCells("EAFIT")
-                Driver.updateOne({'_id':driver._id},{into: true},function(err){
-                    if(err) return res.status(500).send({message: `Error al registrar usuario: ${err}`})
+                Driver.updateOne({ '_id': driver._id }, { into: true }, function (err) {
+                    if (err) return res.status(500).send({ message: `Error al registrar usuario: ${err}` })
                     console.log('into: true')
                 })
             }
 
-            return res.status(200).send({access: true})
+            return res.status(200).send({ access: true })
         }
-        else{
-            return res.status(200).send({access: false})
+        else {
+            return res.status(200).send({ access: false })
         }
 
     })
 }
 
-function deleteDriver(req,res){
+function deleteDriver(req, res) {
     let driverID = req.body.id_driver
-    Driver.findById(driverID,(err,driver)=>{
-        if(err) res.status(500).send({message: `Error al borrar conductor: ${err}`})
+    Driver.findById(driverID, (err, driver) => {
+        if (err) res.status(500).send({ message: `Error al borrar conductor: ${err}` })
 
-        driver.remove(err =>{
-            if(err) res.status(500).send({message: `Error al borrar el usuario: ${err}`})
-            res.status(200).send({message: 'El conductor ha sido eliminado'})
+        driver.remove(err => {
+            if (err) res.status(500).send({ message: `Error al borrar el usuario: ${err}` })
+            res.status(200).send({ message: 'El conductor ha sido eliminado' })
         })
 
 
     })
 }
 
-function createDriverExcel(req,res){ 
-    for(var i = 0; i<req.body.driverList.length;i++){
+function createDriverExcel(req, res) {
+
+    for (var i = 0; i < req.body.driverList.length; i++) {
         let emailFind = req.body.driverList[i].email
-        var driverJSON ={
-        email: emailFind,
-        status: true,
-        into: false,
-        id_carnet: req.body.driverList[i].id_Carnet
+
+        var driverJSON = {
+            email: emailFind,
+            status: true,
+            into: false,
+            id_carnet: parseInt(req.body.driverList[i].id_Carnet)
         }
-        Driver.updateOne({'email': emailFind},driverJSON,{upsert: true}, function(err){
-            if(err) return res.status(500).send({message: `Error al registrar usuario: ${err}`})
-            console.log('conductor creado/actualizado')
+
+
+        Driver.updateOne({ 'email': emailFind }, driverJSON, { upsert: true }, function (err) {
+            if (err) return res.status(500).send({ message: `Error al registrar usuario: ${err}` })
         })
     }
-    return res.status(200).send({message: 'Conductores creados/actualizados'})
-    
+
+    return res.status(200).send({ message: 'Conductores creados/actualizados' })
+}
+
+function increaseTimes(_id){
+    Driver.findOne({'_id': _id}, 'times', function(err,driver){
+        if(err) return console.log(`Error al encontrar conductor: ${err}`)
+        if(!driver) return console.log('No existe conductor')
+        if(driver){
+            var updateJSON = {
+                times: driver.times + 1
+            }
+            Driver.updateOne({'_id':_id},updateJSON,function(err){
+                if(err) return console.log(`Error al incrementar veces usadas ${err}`)
+            })
+        }
+    })
 }
 
 module.exports = {
@@ -159,5 +182,6 @@ module.exports = {
     showDrivers,
     verifyDriver,
     deleteDriver,
-    createDriverExcel
+    createDriverExcel,
+    increaseTimes
 }
