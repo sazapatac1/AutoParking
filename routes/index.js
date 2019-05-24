@@ -41,6 +41,9 @@ api.get('/api/private', auth, function(req,res){
     res.status(200).send({message: 'Tienes acceso'})
 })
 
+//Todos los drivers en falso
+api.get('/api/allinFalse',driverController.allDriverinFalse)
+
 //Borrar conductor
 api.post('/api/deleteDriver',driverController.deleteDriver)
 

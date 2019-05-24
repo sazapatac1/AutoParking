@@ -142,7 +142,7 @@ function deleteDriver(req, res) {
 }
 
 function createDriverExcel(req, res) {
-
+    allDriverinFalse()
     for (var i = 0; i < req.body.driverList.length; i++) {
         let emailFind = req.body.driverList[i].email
 
@@ -152,13 +152,10 @@ function createDriverExcel(req, res) {
             into: false,
             id_carnet: parseInt(req.body.driverList[i].id_Carnet)
         }
-
-
         Driver.updateOne({ 'email': emailFind }, driverJSON, { upsert: true }, function (err) {
             if (err) return res.status(500).send({ message: `Error al registrar usuario: ${err}` })
         })
     }
-
     return res.status(200).send({ message: 'Conductores creados/actualizados' })
 }
 
@@ -177,11 +174,18 @@ function increaseTimes(_id){
     })
 }
 
+function allDriverinFalse(){
+    Driver.updateMany({},{status: false},function(err){
+        if(err) return console.log(`Error al cambiar todos los conductores a falso ${err}`)
+    })
+    return console.log({ message: 'Todos los conductores no tienen beneficio' })}
+
 module.exports = {
     createDriverWeb,
     showDrivers,
     verifyDriver,
     deleteDriver,
     createDriverExcel,
-    increaseTimes
+    increaseTimes,
+    allDriverinFalse
 }
