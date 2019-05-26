@@ -11,7 +11,8 @@ ser = serial.Serial(
         bytesize=serial.EIGHTBITS,
         timeout=1)
 
-driver = webdriver.Chrome()
+#Acá colocar la dirección de donde esta descargado el chrome-driver
+driver = webdriver.Chrome(r'C:\\users\\data\\chromedriver.exe')
 driver.get('http://autoparkingeafit.herokuapp.com/login')
 
 
@@ -26,7 +27,7 @@ def writeInput(data):
     element = driver.find_element_by_id('id_internalCarnet')
     element.clear()
     element.send_keys(data)
-    time.sleep(3)
+    
 
 
 def listener():
@@ -36,5 +37,6 @@ def listener():
 
         if len(data) != 0 and testingPage():
             writeInput(data)
+            time.sleep(3)
 
 listener()
