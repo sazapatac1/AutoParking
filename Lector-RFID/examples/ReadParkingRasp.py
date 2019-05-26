@@ -19,6 +19,10 @@ GPIO.setmode(GPIO.BOARD)
 GPIO.setup(32, GPIO.OUT) #Verde
 GPIO.setup(37, GPIO.OUT) #Rojo
 
+GPIO.output(32, GPIO.LOW)
+GPIO.output(37, GPIO.LOW)
+
+
 def end_read(signal,frame):
     global run
     print("\nCtrl+C captured, ending read.")
