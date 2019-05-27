@@ -59,7 +59,7 @@ function createDriverWeb(req, res) {
     })
 }
 
-/*function showDrivers(req, res) {
+function showDrivers(req, res) {
     //buscar todo en base de datos
     Driver.find({},(err,drivers) =>{
         if(err) return res.status(500).send({message : `Error al realizar la petición: ${err}` })
@@ -90,16 +90,16 @@ function createDriverWeb(req, res) {
         }
         res.status(200).send({driversList})
     })
-}*/
+}
 
-function showDrivers(req,res){
+/*function showDrivers(req,res){
     //buscar todo en base de datos
     Driver.find({},(err, drivers) =>{
         if(err) return res.status(500).send({message : `Error al realizar la petición: ${err}` })
         if(!drivers) return res.status(404).send({message: `No existen conductores`})
         res.status(200).send({drivers})
     })
-}
+}*/
 
 function verifyDriver(req, res) {
     let id_carnetFind = req.body.id_carnetFind
