@@ -59,17 +59,18 @@ function createDriverWeb(req, res) {
     })
 }
 
-function showDrivers(req, res) {
+/*function showDrivers(req, res) {
     //buscar todo en base de datos
     Driver.find({},(err,drivers) =>{
         if(err) return res.status(500).send({message : `Error al realizar la petición: ${err}` })
         if(!drivers) return res.status(404).send({message: `No existen conductores`})
-        var driversToShow = {
-            driversS:[]
-        }
+        var driversList = []
         for(var i = 0; i < drivers.length;i++){
-            //let address = AddressController.getAddress('5ca685badb8a0656e3f51a65')
-            //console.log(address)
+            //AddressController.getAddress(drivers[i].id_addressF).then(function(result){
+                //console.log(result)
+            //})
+            //let car = CarController.getCar(drivers[i]._id)
+            //console.log(car)
             let driverToSend = {
                 name1: drivers[i].name1,
                 name2: drivers[i].name2,
@@ -83,14 +84,22 @@ function showDrivers(req, res) {
                 id_carnet: drivers[i].id_carnet,
                 id_internalCarnet: drivers[i].id_internalCarnet,
                 id_addressF: drivers[i].id_addressF,
-                times: drivers[i].times
+                times: drivers[i].times,
             }
-            driversToShow.driversS.push(driverToSend)
+            driversList.push(driverToSend)
         }
-        res.status(200).send({driversToShow})
+        res.status(200).send({driversList})
+    })
+}*/
+
+function showDrivers(req,res){
+    //buscar todo en base de datos
+    Driver.find({},(err, drivers) =>{
+        if(err) return res.status(500).send({message : `Error al realizar la petición: ${err}` })
+        if(!drivers) return res.status(404).send({message: `No existen conductores`})
+        res.status(200).send({drivers})
     })
 }
-
 
 function verifyDriver(req, res) {
     let id_carnetFind = req.body.id_carnetFind
