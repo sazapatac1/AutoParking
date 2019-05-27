@@ -18,24 +18,30 @@ function showAddress(req,res){
     Address.find({},(err, addresss) =>{
         if(err) return res.status(500).send({message : `Error al realizar la petición: ${err}` })
         if(!addresss) return res.status(404).send({message: `No existen automoviles`})
-        res.send(200, {addresss})
+        res.status(200).send({addresss})
     })
 }
 
-function getAddress(_id){
-    let id = _id
-    let addresar
-    Address.findById(_id,(err,address)=>{
-        if(err) return console.log('Error al encontrar direccion')
-        if(!address) return console.log('Direccion no existe')
-        addresar = address
-        console.log(addresar)
-        return {address}
+/*function getAddress(_id){
+    Address.findOne({_id:_id},function(err,address){
+        if(err)return null 
+        return address
     })
 }
+
+//function con promise
+function getAddress(_id){
+    return new Promise((resolve,reject)=>{
+        Address.findOne({_id:_id},function(err,address){
+            if(err) reject(null)
+            if(!address) resolve(null)
+            resolve(address)
+        })
+    })
+}*/
 
 module.exports = {
     createAddress,
     showAddress,
-    getAddress
+    //getAddress,
 }

@@ -18,20 +18,20 @@ function showCars(req,res){
     Car.find({},(err,cars) =>{
         if(err) return res.status(500).send({message : `Error al realizar la petición: ${err}` })
         if(!cars) return res.status(404).send({message: `No existen automoviles`})
-        res.send(200, {cars})
+        res.status(200).send({cars})
     })
 }
 
-function getCar(driver_id){
+/*function getCar(driver_id){
     Car.findOne({'id_driverF':driver_id},'car_plate',(err,car)=>{
         if(err) return console.log('Error al encontrar carro')
-        console.log(car.car_plate)
-        return car.plate
+        console.log(car)
+        return car
     })
-}
+}*/
 
 module.exports = {
     createCar,
     showCars,
-    getCar
+    //getCar
 }
