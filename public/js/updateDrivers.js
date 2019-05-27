@@ -1,7 +1,8 @@
 $(document).ready(function () {
 
 
-
+    console.log(Cookies.get('driverSelected'));
+    
     $('#cardForm1').show();
     $('#cardForm2').hide();
     $('#cardForm3').hide();
