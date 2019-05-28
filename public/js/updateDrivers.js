@@ -6,8 +6,10 @@ $(document).ready(function () {
 
 
     if (Cookies.get('driverSelected') != undefined) {
-        fillInputs(infoUser)
-        requestAddress()
+        infoUser = JSON.parse(infoUser);
+
+        fillInputs(infoUser);
+        //requestAddress(infoUser)
         //requestCar()
     }
 
@@ -112,7 +114,6 @@ $(document).ready(function () {
 
 
     function fillInputs(userData) {
-        userData = JSON.parse(userData);
         console.log(userData.date);
         $('#name1').val(userData.name1);
         $('#name2').val(userData.name2);
@@ -122,5 +123,10 @@ $(document).ready(function () {
         $('#email').val(userData.email);
         $('#id_carnet').val(userData.id_carnet);
         $('#id_internalCarnet').val(userData.id_internalCarnet);
+    }
+
+
+    function requestAddress(){
+
     }
 });
