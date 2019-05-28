@@ -22,16 +22,18 @@ function showCars(req,res){
     })
 }
 
-/*function getCar(driver_id){
-    Car.findOne({'id_driverF':driver_id},'car_plate',(err,car)=>{
-        if(err) return console.log('Error al encontrar carro')
-        console.log(car)
-        return car
+function getCar(req,res){
+    let driver_id = req.body.driver_id
+    Car.findOne({'id_driverF':driver_id},'car_plate model color gas',(err,car) =>{
+        if(err) return res.status(500).send({message : `Error al realizar la petición: ${err}` })
+        if(!car) return res.status(404).send({message: `El vehículo no existe`})
+
+        res.status(200).send({car})
     })
-}*/
+}
 
 module.exports = {
     createCar,
     showCars,
-    //getCar
+    getCar
 }

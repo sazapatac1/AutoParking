@@ -34,6 +34,12 @@ api.get('/api/showCars', carController.showCars)
 //mostrar direccions
 api.get('/api/showAddress',addressController.showAddress)
 
+//obtener direccion
+api.post('/api/getAddress/', addressController.getAddress)
+
+//obtener vehiculo
+api.post('/api/getCar/', carController.getCar)
+
 //verificar carnet
 api.post('/api/verifyCarnet/', driverController.verifyDriver)
 
