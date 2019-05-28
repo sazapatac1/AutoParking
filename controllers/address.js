@@ -22,13 +22,18 @@ function showAddress(req,res){
     })
 }
 
-/*function getAddress(_id){
-    Address.findOne({_id:_id},function(err,address){
-        if(err)return null 
-        return address
+function getAddress(req,res){
+    let address_id = req.body.address_id
+    //buscar productId en base de datos
+    Address.findById(address_id,(err,address) =>{
+        if(err) return res.status(500).send({message : `Error al realizar la petición: ${err}` })
+        if(!address) return res.status(404).send({message: `La dirección no existe`})
+
+        res.status(200).send({address})
     })
 }
 
+/*
 //function con promise
 function getAddress(_id){
     return new Promise((resolve,reject)=>{
@@ -43,5 +48,5 @@ function getAddress(_id){
 module.exports = {
     createAddress,
     showAddress,
-    //getAddress,
+    getAddress,
 }

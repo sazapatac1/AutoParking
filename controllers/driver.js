@@ -72,6 +72,7 @@ function showDrivers(req, res) {
             //let car = CarController.getCar(drivers[i]._id)
             //console.log(car)
             let driverToSend = {
+                id: drivers[i]._id,
                 name1: drivers[i].name1,
                 name2: drivers[i].name2,
                 last_name1: drivers[i].last_name1,
