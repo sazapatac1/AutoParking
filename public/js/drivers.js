@@ -57,7 +57,9 @@ $(document).ready(function () {
             { data: 'into' },
             { data: 'id_carnet' },
             { data: 'id_internalCarnet' },
-            { data: 'times' }
+            { data: 'times' },
+            { data: 'id'}
+
         ]
     });
 
