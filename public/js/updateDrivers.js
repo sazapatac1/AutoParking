@@ -9,7 +9,7 @@ $(document).ready(function () {
 
 
         fillInputsDriver(infoUser);
-        requestAddress(infoUser.id_addressF);
+        //requestAddress(infoUser.id_addressF);
         //requestCar(infoUser.id);
 
 
