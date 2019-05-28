@@ -3,10 +3,10 @@ $(document).ready(function () {
 
     infoUser = Cookies.get('driverSelected');
     console.log(Cookies.get('driverSelected'));
-    
+
     if (Cookies.get('driverSelected') != undefined) {
         infoUser = JSON.parse(infoUser);
-        
+
 
         fillInputsDriver(infoUser);
         requestAddress(infoUser.id_addressF);
@@ -120,18 +120,18 @@ $(document).ready(function () {
     function fillInputsDriver(userData) {
         console.log(userData.date);
 
-        if(userData.gender == 'M'){
+        if (userData.gender == 'M') {
             $('#rd_male').prop('checked', true);
-        }else{
+        } else {
             $('#rd_female').prop('checked', true);
         }
 
-        if(userData.status == true){
+        if (userData.status == true) {
             $('#rd_statusTrue').prop('checked', true);
-        }else{
+        } else {
             $('#rd_statusFalse').prop('checked', true);
         }
-            
+
 
         $('#name1').val(userData.name1);
         $('#name2').val(userData.name2);
@@ -146,11 +146,11 @@ $(document).ready(function () {
     function fillInputsAddress(userAddress) {
         console.log(userAddress);
 
-        if(userAddress.city == "Sabaneta")
+        if (userAddress.city == "Sabaneta")
             $('city').val('sabaneta');
-        else if(userAddress.city == "Medellín"){
+        else if (userAddress.city == "Medellín") {
             $('city').val('medellin');
-        }else if(userAddress.city == "Bello"){
+        } else if (userAddress.city == "Bello") {
             $('city').val('bello');
         }
 
@@ -160,14 +160,8 @@ $(document).ready(function () {
     }
 
     function fillInputsCar(userCar) {
-        /**"car_plate": "ABC123",
-        "model": 2005,
-        "color": "Plateado",
-        "gas": "Corriente",
-*/
-
-
-
+        $('#car_plate').val(userCar.car_plate);
+        $('#model').val(userCar.model);
     }
 
 
@@ -213,7 +207,7 @@ $(document).ready(function () {
 
         $.ajax(settings).done(function (response) {
             fillInputsCar(response.car);
-        }).fail(function(){
+        }).fail(function () {
             alert("ERROR, CONTACTAR AL ADMINISTRADOR");
         })
 
