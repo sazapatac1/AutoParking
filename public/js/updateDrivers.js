@@ -145,13 +145,27 @@ $(document).ready(function () {
 
     function fillInputsAddress(userAddress) {
         console.log(userAddress);
-        
+
+        if(userAddress.city == "Sabaneta")
+            $('city').val('sabaneta');
+        else if(userAddress.city == "Medellín"){
+            $('city').val('medellin');
+        }else if(userAddress.city == "Bello"){
+            $('city').val('bello');
+        }
+
         $('#add2').val(userAddress.add2);
         $('#add3').val(userAddress.add3);
         $('#add4').val(userAddress.add4);
     }
 
     function fillInputsCar(userCar) {
+        /**"car_plate": "ABC123",
+        "model": 2005,
+        "color": "Plateado",
+        "gas": "Corriente",
+*/
+
 
 
     }
