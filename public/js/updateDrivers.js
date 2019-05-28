@@ -3,14 +3,14 @@ $(document).ready(function () {
 
     infoUser = Cookies.get('driverSelected');
     console.log(Cookies.get('driverSelected'));
-
-
+    
     if (Cookies.get('driverSelected') != undefined) {
         infoUser = JSON.parse(infoUser);
+        
 
         fillInputsDriver(infoUser);
         requestAddress(infoUser.id_addressF);
-        requestCar(infoUser.id);
+        //requestCar(infoUser.id);
 
 
         //requestCar()
@@ -37,6 +37,7 @@ $(document).ready(function () {
         Cookies.remove('userId');
         Cookies.remove('userName');
         Cookies.remove('userEmail');
+        Cookies.remove('driverSelected');
 
         window.location.replace('/login');
     });
@@ -118,6 +119,20 @@ $(document).ready(function () {
 
     function fillInputsDriver(userData) {
         console.log(userData.date);
+
+        if(userData.gender == 'M'){
+            $('#rd_male').prop('checked', true);
+        }else{
+            $('#rd_female').prop('checked', true);
+        }
+
+        if(userData.status == true){
+            $('#rd_statusTrue').prop('checked', true);
+        }else{
+            $('#rd_statusFalse').prop('checked', true);
+        }
+            
+
         $('#name1').val(userData.name1);
         $('#name2').val(userData.name2);
         $('#last_name1').val(userData.last_name1);
@@ -130,12 +145,14 @@ $(document).ready(function () {
 
     function fillInputsAddress(userAddress) {
         console.log(userAddress);
+        
         $('#add2').val(userAddress.add2);
         $('#add3').val(userAddress.add3);
         $('#add4').val(userAddress.add4);
     }
 
     function fillInputsCar(userCar) {
+
 
     }
 
@@ -168,7 +185,7 @@ $(document).ready(function () {
         var settings = {
             "async": true,
             "crossDomain": true,
-            "url": "https://autoparkingeafit.herokuapp.com/api/getCar",
+            "url": "/api/getCar",
             "method": "POST",
             "headers": {
                 "content-type": "application/json",

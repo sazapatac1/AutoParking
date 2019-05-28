@@ -16,9 +16,9 @@ $(document).ready(function () {
         Cookies.remove('userId');
         Cookies.remove('userName');
         Cookies.remove('userEmail');
+        Cookies.remove('driverSelected');
 
         window.location.replace('/login');
-        console.log("entre?");
     });
 
 

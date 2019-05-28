@@ -10,7 +10,7 @@ const DriverSchema = new Schema({
     name2: { type: String, default:""},
     last_name1: { type: String, default:""},
     last_name2: { type: String, default:"" },
-    date: { type: Date, default:"" },
+    date: { type: String, default:""},
     email: { type: String, default:"" },
     gender: { type: String, default:"" },
     status: { type: Boolean, default: false },
