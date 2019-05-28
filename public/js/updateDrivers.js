@@ -8,8 +8,11 @@ $(document).ready(function () {
     if (Cookies.get('driverSelected') != undefined) {
         infoUser = JSON.parse(infoUser);
 
-        fillInputs(infoUser);
-        //requestAddress(infoUser)
+        fillInputsDriver(infoUser);
+        requestAddress(infoUser.id_addressF);
+        requestCar(infoUser.id);
+
+
         //requestCar()
     }
 
@@ -113,7 +116,7 @@ $(document).ready(function () {
     });
 
 
-    function fillInputs(userData) {
+    function fillInputsDriver(userData) {
         console.log(userData.date);
         $('#name1').val(userData.name1);
         $('#name2').val(userData.name2);
@@ -125,8 +128,63 @@ $(document).ready(function () {
         $('#id_internalCarnet').val(userData.id_internalCarnet);
     }
 
+    function fillInputsAddress(userAddress) {
+        console.log(userAddress);
+        $('#add2').val(userAddress.add2);
+        $('#add3').val(userAddress.add3);
+        $('#add4').val(userAddress.add4);
+    }
 
-    function requestAddress(){
+    function fillInputsCar(userCar) {
+
+    }
+
+
+
+    function requestAddress(id_address) {
+        var settings = {
+            "async": true,
+            "crossDomain": true,
+            "url": "/api/getAddress",
+            "method": "POST",
+            "headers": {
+                "content-type": "application/json",
+                "cache-control": "no-cache"
+            },
+            "processData": false,
+            "data": JSON.stringify({
+                "address_id": id_address
+            })
+        }
+
+        $.ajax(settings).done(function (response) {
+            fillInputsAddress(response.address);
+        }).fail(function () {
+            alert("ERROR, alertar al administrador");
+        });
+    }
+
+    function requestCar(id_user) {
+        var settings = {
+            "async": true,
+            "crossDomain": true,
+            "url": "https://autoparkingeafit.herokuapp.com/api/getCar",
+            "method": "POST",
+            "headers": {
+                "content-type": "application/json",
+                "cache-control": "no-cache",
+            },
+            "processData": false,
+            "data": JSON.stringify({
+                "driver_id": id_user
+            })
+        }
+
+        $.ajax(settings).done(function (response) {
+            fillInputsCar(response.car);
+        }).fail(function(){
+            alert("ERROR, CONTACTAR AL ADMINISTRADOR");
+        })
 
     }
 });
