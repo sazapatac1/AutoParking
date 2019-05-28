@@ -1,6 +1,9 @@
 $(document).ready(function () {
 
     $('#alertError').hide();
+    $('#loading').hide();
+    $("#button").attr("disabled", true);
+
 
     $("#btnLogout").click(function () {
         Cookies.remove('token');
@@ -14,7 +17,7 @@ $(document).ready(function () {
     var dataSet;
 
     var settings = {
-        "async": true,
+        "async": false,
         "crossDomain": true,
         "url": "/api/showDrivers",
         "method": "GET",
@@ -27,64 +30,18 @@ $(document).ready(function () {
     }
 
     $.ajax(settings).done(function (data) {
-        dataSet = data.driverList;
-        console.log(data);
-
+        $('#loading').show();
+        dataSet = data.driversList;
 
     }).fail(function () {
-
         $('#cardTabla').hide();
         $('#alertError').show();
 
     });
 
-    /**dataSet = [
-        {
-            'name1': "hola",
-            'name2': "hola",
-            'last_name1': "hola",
-            'last_name2': "hola",
-            'date': "hola",
-            'email': "hola",
-            'gender': "hola",
-            'status': "hola",
-            'into': "hola",
-            'id_carnet': "hola",
-            'id_internalCarnet': "hola",
-            'times': "hola"
-          
-        },
-        {
-            'name1': "hola",
-            'name2': "hola",
-            'last_name1': "hola",
-            'last_name2': "hola",
-            'date': "hola",
-            'email': "hola",
-            'gender': "hola",
-            'status': "hola",
-            'into': "hola",
-            'id_carnet': "hola",
-            'id_internalCarnet': "hola",
-            'times': "hola"
-            
-        }, {
-            'name1': "hola",
-            'name2': "hola",
-            'last_name1': "hola",
-            'last_name2': "hola",
-            'date': "hola",
-            'email': "hola",
-            'gender': "hola",
-            'status': "hola",
-            'into': "hola",
-            'id_carnet': "hola",
-            'id_internalCarnet': "hola",
-            'times': "hola",
-            
-        }
-    ]
-    */
+    $('#loading').hide();
+
+
     var table = $('#tabla').DataTable({
         select: true,
         data: dataSet,
@@ -102,11 +59,11 @@ $(document).ready(function () {
             { data: 'id_internalCarnet' },
             { data: 'times' }
         ]
-
     });
 
 
     $('#tabla tbody').on('click', 'tr', function () {
+        $("#button").attr("disabled", false);
         if ($(this).hasClass('selected')) {
             $(this).removeClass('selected');
         }

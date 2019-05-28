@@ -1,20 +1,28 @@
 $(document).ready(function () {
 
 
+    infoUser = Cookies.get('driverSelected');
     console.log(Cookies.get('driverSelected'));
-    
+
+
+    if (Cookies.get('driverSelected') != undefined) {
+        fillInputs(infoUser)
+        requestAddress()
+        //requestCar()
+    }
+
     $('#cardForm1').show();
     $('#cardForm2').hide();
     $('#cardForm3').hide();
 
     $('#alert1').hide();
     $('#alert2').hide();
-    
-    
-    if(Cookies.get('token') == undefined){
+
+
+    if (Cookies.get('token') == undefined) {
         $('#alertError').show();
         $('#cardForm1').hide();
-    }else{
+    } else {
         $('#alertError').hide();
     }
 
@@ -97,9 +105,22 @@ $(document).ready(function () {
         $.ajax(settings).done(function (data) {
             $('#alert1').show();
             $('#cardForm3').hide();
-        }).fail(function (){
+        }).fail(function () {
             $('#alert2').show();
         });
     });
 
+
+    function fillInputs(userData) {
+        userData = JSON.parse(userData);
+        console.log(userData.date);
+        $('#name1').val(userData.name1);
+        $('#name2').val(userData.name2);
+        $('#last_name1').val(userData.last_name1);
+        $('#last_name2').val(userData.last_name2);
+        $('#date').val(userData.date);
+        $('#email').val(userData.email);
+        $('#id_carnet').val(userData.id_carnet);
+        $('#id_internalCarnet').val(userData.id_internalCarnet);
+    }
 });

@@ -93,8 +93,25 @@
             <div class="error mx-auto" data-text="404">404</div>
             <p class="lead text-gray-800 mb-5">Acceso no autorizado</p>
             <p class="text-gray-500 mb-0">Debes acceder al sistema para poder usarlo...</p>
-
           </div>
+
+          <div class="row" id="loading">
+            <div class="col-sm-4"></div>
+            <div class="col-sm-4 center-block text-center">
+              <div class=" spinner-border text-info" role="status">
+                <span class="sr-only">Loading...</span>
+              </div>
+              <div class=" spinner-border text-info" role="status">
+                <span class="sr-only">Loading...</span>
+              </div>
+              <div class=" spinner-border text-info" role="status">
+                <span class="sr-only">Loading...</span>
+              </div>
+            </div>
+            <div class="col-sm-4"></div>
+          </div>
+
+          
 
 
           <!-- Page Heading -->
@@ -103,7 +120,11 @@
           <!-- Default Card Example -->
           <div class="card mb-4 shadow">
             <div class="card-body" id="cardTabla">
-              <a class="btn btn-primary" id="button">Primary</a>
+
+              <button class="btn btn-info" style="color:white" id="button">
+                <i class="fas fa-user-cog"></i>
+                <span>Editar</span></button>
+
 
               <div class="table-responsive">
                 <table class="table table-bordered" id="tabla" width="100%" cellspacing="0">
