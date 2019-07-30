@@ -1,8 +1,5 @@
-<<<<<<< HEAD
-65;5603;1c# backendIntegrador
-=======
+
 # Auto Parking - Eafit University
->>>>>>> 443a766c9c72757ae877b4adfa2b985c1e6b9146
 
 Validation system in the Eafit University's parking.
 
