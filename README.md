@@ -1,4 +1,4 @@
-# backendIntegrador
+65;5603;1c# backendIntegrador
 
 Validation system in the Eafit University's parking.
 
@@ -6,6 +6,8 @@ We used
 - Nodejs, MongoDB to develop the backend
 - Bootstrap (Html5, CSS, Jquery) to develop the front-end  
 - Raspberry Pi,  Python to take control with the university id cards
+
+The whole documentation and management about this priject was done in AzureDevops: https://dev.azure.com/csuazag/Integrador
 
 Team: 
 
