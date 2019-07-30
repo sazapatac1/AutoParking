@@ -1,4 +1,4 @@
-# backendIntegrador
+# Auto Parking - Eafit University
 
 Validation system in the Eafit University's parking.
 
